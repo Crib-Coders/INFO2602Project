@@ -5,13 +5,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.String(120), nullable=False, default='user')
-    is_verified = db.Column(db.Boolean, nullable=False, default=False)
+    role = db.Column(db.String(120), nullable=False, default='tenant')
+    is_verified = db.Column(db.Boolean, nullable=False, default=True)
 
-    def __init__(self, username, password, role= 'user' ):
+    def __init__(self, username, password):
         self.username = username
         self.set_password(password)
-        self.role = role
 
     def get_json(self):
         return{
