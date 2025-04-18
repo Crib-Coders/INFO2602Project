@@ -21,17 +21,18 @@ def register(username, password, role='tenant'):
     if User.query.filter_by(username=username).first():
         return None, "Username already exists"
     
-    new_user = User(
-        username=username,
-        role=role,
-        is_verified=False if role == 'tenant' else True
-    )
-    new_user.set_password(password)
-    
-    db.session.add(new_user)
-    db.session.commit()
-    
-    return new_user, None
+    try:
+        user = User(
+            username=username,
+            password=password,
+            role=role
+        )
+        db.session.add(user)
+        db.session.commit()
+        return user, None
+    except Exception as e:
+        db.session.rollback()
+        return None, str(e)
 
 def get_current_user():
     """Get the currently authenticated user"""
@@ -98,3 +99,30 @@ def verify_tenant(user_id):
         db.session.commit()
         return True
     return False
+
+
+#Auth Controller Tests
+
+def test_auth():
+    # Test registration
+    print("Testing registration...")
+    user, error = register('testuser', 'testpass', 'tenant')
+    assert user is not None and user.role == 'tenant' and not user.is_verified, "Tenant registration failed"
+    print(f"✓ Registered tenant: {user.username} (verified: {user.is_verified})")
+    
+    # Test landlord registration
+    landlord, error = register('testlandlord', 'landlordpass', 'landlord')
+    assert landlord is not None and landlord.role == 'landlord' and landlord.is_verified, "Landlord registration failed"
+    print(f"✓ Registered landlord: {landlord.username} (verified: {landlord.is_verified})")
+
+    # Test login
+    print("Testing login...")
+    token = login('testuser', 'testpass')
+    assert token is not None, "Login failed"
+    print("✓ Login successful")
+    
+    # Test invalid login
+    print("Testing invalid login...")
+    token = login('testuser', 'wrongpass')
+    assert token is None, "Invalid login test failed"
+    print("✓ Invalid login rejected")

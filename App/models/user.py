@@ -15,11 +15,12 @@ class User(db.Model):
     listings = db.relationship('Listing', backref='landlord', lazy=True, cascade='all, delete-orphan')
     reviews = db.relationship('Review', backref='tenant', lazy=True, cascade='all, delete-orphan')
 
-    def __init__(self, username, password, role='tenant'):
+    def __init__(self, username, password, role='tenant', is_verified=None):  # Updated init
         self.username = username
         self.set_password(password)
         self.role = role
-        self.is_verified = (role != 'tenant')
+        # Set verification status based on role if not explicitly provided
+        self.is_verified = is_verified if is_verified is not None else (role != 'tenant')
 
         
     def __repr__(self):

@@ -1,10 +1,12 @@
 from App.models import Review
 from App.database import db
+from App.controllers import *
+from App.controllers.listing import get_all_listings
 
 def create_review(user_id, listing_id, text):
     """Create a new review for an apartment"""
     new_review = Review(
-        user_id=user_id,
+         tenant_id=user_id,
         listing_id=listing_id,
         text=text
     )
@@ -49,3 +51,33 @@ def delete_review(id):
         db.session.commit()
         return True
     return False
+
+
+
+#Review Controller Tests
+
+def test_reviews():
+    # Create test tenant
+    tenant, _ = register('testtenant', 'tenantpass', 'tenant')
+    
+    # Get first listing
+    listing = get_all_listings()[0]
+    if not listing:
+        print("No listings available for testing.")
+        return False
+    
+    # Test create review
+    print("Testing create review...")
+    review = create_review(
+        user_id=tenant.id,
+        listing_id=listing.id,
+        text="Great apartment!"
+    )
+    assert review is not None, "Create review failed"
+    print(f"✓ Created review: {review.text}")
+    
+    # Test get reviews for listing
+    print("Testing get reviews for listing...")
+    reviews = get_reviews_for_listing(listing.id)
+    assert len(reviews) > 0, "No reviews found"
+    print(f"✓ Found {len(reviews)} reviews")

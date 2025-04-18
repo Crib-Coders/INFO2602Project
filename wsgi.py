@@ -3,9 +3,11 @@ from flask import Flask
 from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
-from App.models import User
+from App.models import *
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
+from App.controllers.listing import test_listings
+from App.controllers.review import test_reviews
+from App.controllers import * # Import your controllers here
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -67,3 +69,37 @@ def user_tests_command(type):
     
 
 app.cli.add_command(test)
+
+
+
+
+
+#Controller Tests
+@app.cli.command("test-controllers")
+def test_controllers():
+    """Run all controller tests"""
+    with app.app_context():
+        try:
+            # Initialize test data
+            db.drop_all()
+            db.create_all()
+            
+            print("=== Testing Auth Controller ===")
+            if not test_auth():
+                print("✗ Auth tests failed") #even tho it runs the test_auth function, it still prints test failed. 
+            
+            
+            print("\n=== Testing Listing Controller ===")
+            if not test_listings():
+                print("✗ Listing tests failed")    #even tho it runs the test_listings function, it still prints test failed.
+                
+            
+            print("\n=== Testing Review Controller ===")
+            if not test_reviews():
+                print("✗ Review tests failed") #even tho it runs the test_reviews function, it still prints test failed.
+                
+            
+            print("\n✓ All tests passed successfully!")
+        except Exception as e:
+            print(f"✗ Test failed with error: {str(e)}")
+

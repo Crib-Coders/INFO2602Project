@@ -1,10 +1,12 @@
+from App.models import *
 from App.models import Listing
 from App.database import db
+from App.controllers import *
 
 def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
     """Create a new apartment listing"""
     new_listing = Listing(
-        user_id=user_id,
+        landlord_id=user_id,
         title=title,
         bedrooms=bedrooms,
         bathrooms=bathrooms,
@@ -69,3 +71,49 @@ def search_listings(location=None, min_price=None, max_price=None, bedrooms=None
         query = query.filter(Listing.bedrooms >= bedrooms)
     
     return query.all()
+
+
+
+
+#Listing Test
+
+def test_listings():
+    # Create test landlord - use the auth controller's register function
+    from App.controllers.auth import register
+    
+    print("Creating test landlord...")
+    landlord, error = register('testlandlord1', 'landlordpass', 'landlord1')
+    if not landlord:
+        print(f"✗ Failed to create landlord: {error}")
+        return
+    
+    print(f"✓ Created landlord: {landlord.username} (ID: {landlord.id})")
+    
+    # Test create listing
+    print("Testing create listing...")
+    listing = create_listing(
+        user_id=landlord.id,
+        title="Test Listing",
+        bedrooms=2,
+        bathrooms=1,
+        price=1500,
+        location="Kingston",
+        image="test.jpg"
+    )
+    
+    if not listing:
+        print("✗ Failed to create listing")
+        return
+    
+    print(f"✓ Created listing: {listing.title} (ID: {listing.id})")
+    
+    # Test get all listings
+    print("Testing get all listings...")
+    listings = get_all_listings()
+    if not listings:
+        print("✗ No listings found")
+        return
+    
+    print(f"✓ Found {len(listings)} listings")
+    for l in listings:
+        print(f"  - {l.title} (ID: {l.id})")
