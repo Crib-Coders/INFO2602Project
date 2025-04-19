@@ -5,7 +5,7 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 from App.controllers import (
     get_listing,
     get_all_listing,
-    initialize
+    initialize,
 )
 
 @index_views.route('/', methods=['GET'])
@@ -21,11 +21,6 @@ def init():
 @index_views.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'status':'healthy'})
-
-@index_views.route('/', methods=['GET'])
-def index_page(listing_id=None):
-    listings = get_all_listings()
-    return render_template('index.html', listings=listings)
 
 @index_views.route('/<int:listing_id>', methods=['GET'])
 def get_listing_page(listing_id):
