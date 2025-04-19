@@ -4,13 +4,13 @@ from App.controllers import create_user, initialize
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 from App.controllers import (
     get_listing,
-    get_all_listing,
+    get_all_listings,
     initialize,
 )
 
 @index_views.route('/', methods=['GET'])
 def index_page():
-    listings = get_all_listing()
+    listings = get_all_listings()
     return render_template('index.html', listings=listings)
 
 @index_views.route('/init', methods=['GET'])
