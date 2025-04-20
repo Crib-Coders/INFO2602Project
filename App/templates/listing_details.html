@@ -6,6 +6,7 @@
       <div class="card mb-4">
         <div class="card-body">
           <h1>{{ listing.title }}</h1>
+          <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" alt="{{ listing.title }}" class="listing-image" >
           <p>
             <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s) |
             <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s) |

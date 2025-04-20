@@ -14,4 +14,5 @@ def initialize():
     create_listing(2, 'Apartment 1', 1, 1, 1000, 'New York', 'images/apartment1.jpg', 'Nice') #create listing for brad
     create_listing(2, 'Apartment 2', 1, 1, 1000, 'New York', 'images/apartment1.jpg', 'Nice')
     create_review(1, 1, 'Great place!', 5) #create review for listing 1 by tenant 1
+    create_review(1, 1, 'Nice place!', 4) #create review for listing 1 by tenant 2
      #create review for listing 1 by tenant 2
