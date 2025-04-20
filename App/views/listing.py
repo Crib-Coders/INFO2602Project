@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from App.controllers import get_listing, get_all_public_listings
+from App.controllers.review import get_reviews_for_listing
 
 listing_views = Blueprint('listing_views', __name__, template_folder='../templates')
 
@@ -11,4 +12,5 @@ def view_all_listings():
 @listing_views.route('/listings/<int:id>', methods=['GET'])
 def view_listing(id):
     listing = get_listing(id)
-    return render_template('listing_details.html', listing=listing)
+    reviews = get_reviews_for_listing(id) if listing else []
+    return render_template('listing_details.html', listing=listing, reviews=reviews)
