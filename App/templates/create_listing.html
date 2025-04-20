@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Create Listing{% endblock %}
+{% block page %}Create Listing{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{{ url_for('listing_views.create_listing_action') }}">
+        <!-- Add your form fields here -->
+        <button type="submit" class="btn purple">Submit</button>
+    </form>
+</div>
+{% endblock %}

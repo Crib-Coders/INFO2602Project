@@ -5,7 +5,7 @@ from App.controllers import *
 from App.controllers.listing import get_all_listings
 
 
-def create_review(user_id, listing_id, text):
+def create_review(user_id, listing_id, text, rating=None):
     temp = User.query.filter_by(id=user_id).first()
     if not temp:
         db.session.rollback()
@@ -16,7 +16,8 @@ def create_review(user_id, listing_id, text):
         new_review = Review(
             tenant_id=user_id,
             listing_id=listing_id,
-            text=text
+            text=text,
+            rating=rating
         )
         db.session.add(new_review)
         db.session.commit()
@@ -64,6 +65,24 @@ def delete_review(id):
         return True
     return False
 
+def create_review(listing_id, tenant_id, text, rating):
+    try:
+        # Validate rating
+        if not 1 <= rating <= 5:
+            raise ValueError("Rating must be between 1 and 5")
+            
+        new_review = Review(
+            listing_id=listing_id,
+            tenant_id=tenant_id,
+            text=text,
+            rating=rating
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        return new_review
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 
 #Review Controller Tests

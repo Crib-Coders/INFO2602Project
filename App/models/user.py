@@ -22,6 +22,9 @@ class User(db.Model):
         # Set verification status based on role if not explicitly provided
         self.is_verified = is_verified if is_verified is not None else (role != 'tenant')
 
+    def can_review(self):
+        """Check if user can leave reviews"""
+        return self.role == 'tenant' and self.is_verified
         
     def __repr__(self):
         return f'<User {self.username}>'

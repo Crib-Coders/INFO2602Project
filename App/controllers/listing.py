@@ -3,7 +3,7 @@ from App.models import Listing
 from App.database import db
 from App.controllers import *
 
-def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
+def create_listing(user_id, title, bedrooms, bathrooms, price, location, image=None):
     """Create a new apartment listing"""
     temp = User.query.filter_by(id=user_id).first()
     if not temp:
@@ -83,6 +83,9 @@ def search_listings(location=None, min_price=None, max_price=None, bedrooms=None
     return query.all()
 
 
+def get_all_public_listings():
+    return Listing.query.all()
+
 
 
 #Listing Test
@@ -94,10 +97,10 @@ def test_listings():
     print("Creating test landlord...")
     landlord, error = register('testlandlord1', 'landlordpass', 'landlord1')
     if not landlord:
-        print(f"✗ Failed to create landlord: {error}")
+        print(f"Failed to create landlord: {error}")
         return
     
-    print(f"✓ Created landlord: {landlord.username} (ID: {landlord.id})")
+    print(f" Created landlord: {landlord.username} (ID: {landlord.id})")
     
     # Test create listing
     print("Testing create listing...")
@@ -112,11 +115,11 @@ def test_listings():
     )
     
     if not listing:
-        print("✗ Failed to create listing")
+        print("Failed to create listing")
         return
     
-    print(f"✓ Created listing: {listing.title} (ID: {listing.id})")
-    
+    print(f"Created listing: {listing.title} (ID: {listing.id})")
+
     # Test get all listings
     print("Testing get all listings...")
     listings = get_all_listings()
@@ -127,3 +130,5 @@ def test_listings():
     print(f"✓ Found {len(listings)} listings")
     for l in listings:
         print(f"  - {l.title} (ID: {l.id})")
+
+

@@ -1,5 +1,6 @@
 from App.models import User
 from App.database import db
+from App.models.user import User
 
 def create_user(username, password, role="tenant", is_verified=False):
     newuser = User(username=username, password=password, role=role, is_verified=is_verified)
@@ -12,6 +13,10 @@ def get_user_by_username(username):
 
 def get_user(id):
     return User.query.get(id)
+
+def get_user_by_id(user_id):
+    """Retrieve a user by their ID"""
+    return User.query.get(user_id)  # SQLAlchemy query
 
 def get_all_users():
     return User.query.all()
