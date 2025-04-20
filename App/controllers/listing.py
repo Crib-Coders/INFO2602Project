@@ -36,6 +36,9 @@ def get_all_listings():
     """Get all apartment listings"""
     return Listing.query.all()
 
+def get_all_public_listings():
+    return Listing.query.all()
+
 def get_all_listings_json():
     """Get all listings in JSON format"""
     listings = Listing.query.all()

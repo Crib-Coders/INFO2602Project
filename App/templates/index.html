@@ -1,15 +1,48 @@
 {% extends "layout.html" %}
-{% block title %}Home{% endblock %}
-{% block page %}Home{% endblock %}
+{% block title %}Apartment Reviews{% endblock %}
+{% block page %}Apartment Reviews{% endblock %}
 
 {% block content %}
 <div class="container">
     {% if current_user.is_authenticated %}
-        <h1>Welcome {{ current_user.username }}</h1>
-        <p>You are logged in as {{ current_user.role }}</p>
-    {% else %}
-        <h1>Welcome Guest</h1>
-        <p>Please <a href="{{ url_for('auth_views.login_page') }}">login</a> to continue</p>
+        <!-- PRIVATE VIEW (Logged In) -->
+        <div class="row">
+            <div class="col s12">
+                <h4>Welcome, {{ current_user.username }}!</h4>
+                <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}">View Details</a>
+            </div>
+        </div>
     {% endif %}
-</div>
+
+    <!-- PUBLIC LISTINGS SECTION (Matches Wireframe) -->
+    <h1>Available Listings</h1>
+  {% if listings %}
+    <div class="listings-container">
+      {% for listing in listings %}
+        <div class="listing-card">
+          <h2>{{ listing.title }}</h2>
+          <p>Price: ${{ listing.price }}</p>
+          <p>Location: {{ listing.location }}</p>
+          <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}">View Details</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No listings available at this time.</p>
+  {% endif %}
+
+    <!-- PUBLIC REVIEWS SECTION (Matches Wireframe) -->
+    <h1>Recent Reviews</h1>
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review">
+                <h3>{{ reviews.title }}</h3>
+                <p>{{ reviews.content }}</p>
+                <p>Rating: {{ reviews.rating }}</p>
+                <p>By: {{ reviews.user.username }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No reviews available.</p>
+    {% endif %}
 {% endblock %}
