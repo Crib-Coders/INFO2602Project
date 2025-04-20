@@ -32,7 +32,12 @@ class User(db.Model):
             'username': self.username,
             'role': self.role
         }
+    def is_authenticated(self):
+        return True
 
+    def is_admin(self):
+        return self.role == 'admin'
+    
     def set_password(self, password):
         """Create hashed password."""
         self.password = generate_password_hash(password)

@@ -1,11 +1,11 @@
 modules = ["python-3.12", "web", "nodejs-20", "nix"]
-run = "flask run --host=0.0.0.0 --port=8080"
+run = "flask run -h 0.0.0.0 -p 8080 --reload"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "flask run --host=0.0.0.0 --port=8080"]
+run = ["sh", "-c", "flask run -h 0.0.0.0 -p 8080 --reload"]
 
 [[ports]]
 localPort = 8080
