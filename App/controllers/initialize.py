@@ -6,5 +6,5 @@ from App.database import db
 def initialize():
     db.drop_all()
     db.create_all()
-    create_user('bob', 'bobpass')
+    create_user('bob', 'bobpass', 'tenant', True)
     create_user('brad', 'bradpass', 'landlord')

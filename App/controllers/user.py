@@ -1,8 +1,8 @@
 from App.models import User
 from App.database import db
 
-def create_user(username, password, role="tenant"):
-    newuser = User(username=username, password=password, role=role)
+def create_user(username, password, role="tenant", is_verified=False):
+    newuser = User(username=username, password=password, role=role, is_verified=is_verified)
     db.session.add(newuser)
     db.session.commit()
     return newuser
