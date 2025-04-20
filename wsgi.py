@@ -51,6 +51,15 @@ def list_user_command(format):
 
 app.cli.add_command(user_cli) # add the group to the cli
 
+
+@app.cli.command("list", help="Lists users in the database")
+@click.argument("format", default="string")
+def list_user_command(format):
+    if format == 'string':
+        print(get_all_users())
+    else:
+        print(get_all_users_json())
+
 '''
 Test Commands
 '''

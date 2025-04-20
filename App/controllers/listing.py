@@ -5,18 +5,27 @@ from App.controllers import *
 
 def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
     """Create a new apartment listing"""
-    new_listing = Listing(
-        landlord_id=user_id,
-        title=title,
-        bedrooms=bedrooms,
-        bathrooms=bathrooms,
-        price=price,
-        location=location,
-        image=image
-    )
-    db.session.add(new_listing)
-    db.session.commit()
-    return new_listing
+    temp = User.query.filter_by(id=user_id).first()
+    if not temp:
+        db.session.rollback()
+        return None
+    if temp.role != 'tenant':
+        new_listing = Listing(
+            landlord_id=user_id,
+            title=title,
+            bedrooms=bedrooms,
+            bathrooms=bathrooms,
+            price=price,
+            location=location,
+            image=image
+        )
+        db.session.add(new_listing)
+        db.session.commit()
+        return new_listing
+    else:
+        db.session.rollback()
+        print(" Tenant is not authorized to create a listing")
+        return None
 
 def get_listing(id):
     """Get a single listing by ID"""
