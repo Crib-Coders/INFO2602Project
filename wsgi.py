@@ -1,14 +1,12 @@
 import click, pytest, sys
 from flask import Flask
 from flask.cli import with_appcontext, AppGroup
-from App.controllers import initialize
 
 from App.database import db, get_migrate
 from App.models import *
 from App.main import create_app
 from App.controllers.listing import *
 from App.controllers.review import test_reviews
-from App.controllers.user import create_user, get_all_users, get_all_users_json
 from App.controllers import * # Import your controllers here
 
 

@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-from App.controllers.auth import login
-from App.controllers.user import get_all_users
+
 
 from.index import index_views
 
@@ -27,25 +26,22 @@ def get_user_page():
 def identify_page():
     return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
     
-@auth_views.route('/login', methods=['GET', 'POST'])
+@auth_views.route('/login', methods=['GET'])
 def login_page():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
-        token = login(username, password)
-        if not token:
-            flash('Invalid username or password', 'error')
-            return render_template('login.html')
-        
-        response = redirect(url_for('index_views.index_page'))
-        set_access_cookies(response, token)
-        flash('Login successful!', 'success')
-        return response
-    
-    # GET request (show login form)
-    # Remove the `current_user.is_authenticated` check since JWT doesn't support it
     return render_template('login.html')
+    
+@auth_views.route('/login', methods=['POST'])
+def login_action():
+    data = request.form
+    token = login(data['username'], data['password'])
+    if not token:
+        flash('Invalid username or password', 'error')
+        return redirect(url_for('auth_views.login_page'))
+
+    response = redirect(url_for('index_views.index_page'))  # Redirect to home page
+    set_access_cookies(response, token)
+    flash('Login successful!', 'success')
+    return response
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():

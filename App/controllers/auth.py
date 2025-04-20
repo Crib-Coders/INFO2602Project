@@ -1,4 +1,3 @@
-from functools import wraps
 from flask_jwt_extended import (
     create_access_token,
     JWTManager,
@@ -6,22 +5,15 @@ from flask_jwt_extended import (
     get_jwt_identity,
     verify_jwt_in_request
 )
-from flask import flash, redirect, url_for
-from App.controllers.user import get_user_by_id 
 from werkzeug.security import generate_password_hash, check_password_hash
 from App.models import User
 from App.database import db
-from App.controllers.user import get_user_by_id
 
 def login(username, password):
+    """Authenticate user and return token if successful"""
     user = User.query.filter_by(username=username).first()
     if user and user.check_password(password):
-        # Create token with additional claims
-        additional_claims = {
-            'role': user.role,
-            'is_verified': user.is_verified
-        }
-        return create_access_token(identity=user.id, additional_claims=additional_claims)
+        return create_access_token(identity=user.id)
     return None
 
 def register(username, password, role='tenant'):
@@ -107,20 +99,6 @@ def verify_tenant(user_id):
         db.session.commit()
         return True
     return False
-
-
-def verify_tenant_required(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        user_id = get_jwt_identity()
-        user = get_user_by_id(user_id)  # Implement this function
-        
-        if not user or user.role != 'tenant':  # Check user role
-            flash('Tenant access required', 'error')
-            return redirect(url_for('index_views.index_page'))
-            
-        return f(*args, **kwargs)
-    return wrapper
 
 
 #Auth Controller Tests
