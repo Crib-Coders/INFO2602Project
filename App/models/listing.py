@@ -13,13 +13,14 @@ class Listing(db.Model):
     price = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(120), nullable=False)
     image = db.Column(db.String(120), nullable=False)
+    description = db.Column(db.String(120), nullable=True)  # Added description column
     #reviews = db.relationship('Review', backref='listing', lazy=True)
      # Relationship with Review
     reviews = db.relationship('Review', backref='listing', lazy=True, cascade='all, delete-orphan')
 
 
 
-def __init__(self, landlord_id, title, bedrooms, bathrooms, price, location, image):
+def __init__(self, landlord_id, title, bedrooms, bathrooms, price, location, image, description=None):
     self.landlord_id = landlord_id
     self.title = title
     self.bedrooms = bedrooms
@@ -27,6 +28,7 @@ def __init__(self, landlord_id, title, bedrooms, bathrooms, price, location, ima
     self.price = price
     self.location = location
     self.image = image
+    self.description = description  # Initialize description
 
 def _repr_(self):
     return f'<Listing {self.title}>'

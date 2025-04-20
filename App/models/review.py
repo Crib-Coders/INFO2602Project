@@ -1,5 +1,6 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
+from App.models import User
 
 class Review(db.Model):
     __tablename__ = 'review'
@@ -32,4 +33,10 @@ def get_json(self):
         'text': self.text,
         'user': self.user.get_json()
     }
-    
+
+def get_username(self, tenant_id):
+    """Get the username of the tenant who wrote the review."""
+    user = User.query.get(tenant_id)
+    if user:
+        return user.username
+    return None

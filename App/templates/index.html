@@ -23,7 +23,7 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             {% if listing.image %}
-              <img src="{{ url_for('static', filename='images/' + listing.image) }}" class="card-img-top" alt="{{ listing.title }}">
+              <img src="{{ url_for('static', filename=listing.image) }}" class="card-img-top" alt="{{ listing.title }}">
             {% else %}
               <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
                 No Image

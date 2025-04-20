@@ -3,7 +3,7 @@ from App.models import Listing
 from App.database import db
 from App.controllers import *
 
-def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
+def create_listing(user_id, title, bedrooms, bathrooms, price, location, image, description=None):
     """Create a new apartment listing"""
     temp = User.query.filter_by(id=user_id).first()
     if not temp:
@@ -18,7 +18,8 @@ def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
             bathrooms=bathrooms,
             price=price,
             location=location,
-            image=image
+            image=image,
+            description=description  # Initialize description
         )
         db.session.add(new_listing)
         db.session.commit()
