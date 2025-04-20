@@ -2,6 +2,7 @@ from .user import create_user
 from App.database import db
 from App.controllers import *
 from App.controllers.listing import create_listing
+from App.controllers.review import *
 
 
 
@@ -11,3 +12,4 @@ def initialize():
     create_user('bob', 'bobpass', 'tenant', True) #is_verified is set to False by default but bob is set to true 
     create_user('brad', 'bradpass', 'landlord') #is_verified doesnt matter for landlords
     create_listing(2, 'Apartment 1', 2, 1, 1000, 'New York', 'image1.jpg') #create listing for brad
+    create_review(1, 1, 'Great place!') #create review for listing 1 by tenant 2

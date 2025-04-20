@@ -8,6 +8,7 @@ def create_listing(user_id, title, bedrooms, bathrooms, price, location, image):
     temp = User.query.filter_by(id=user_id).first()
     if not temp:
         db.session.rollback()
+        print(" User not found")
         return None
     if temp.role != 'tenant':
         new_listing = Listing(

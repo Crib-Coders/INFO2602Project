@@ -5,7 +5,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.models import *
 from App.main import create_app
-from App.controllers.listing import test_listings
+from App.controllers.listing import *
 from App.controllers.review import test_reviews
 from App.controllers import * # Import your controllers here
 

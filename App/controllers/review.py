@@ -1,18 +1,30 @@
 from App.models import Review
 from App.database import db
+from App.models import *
 from App.controllers import *
 from App.controllers.listing import get_all_listings
 
+
 def create_review(user_id, listing_id, text):
-    """Create a new review for an apartment"""
-    new_review = Review(
-         tenant_id=user_id,
-        listing_id=listing_id,
-        text=text
-    )
-    db.session.add(new_review)
-    db.session.commit()
-    return new_review
+    temp = User.query.filter_by(id=user_id).first()
+    if not temp:
+        db.session.rollback()
+        print(" User not found")
+    if temp.role != 'landlord':
+        
+        """Create a new review for an apartment"""
+        new_review = Review(
+            tenant_id=user_id,
+            listing_id=listing_id,
+            text=text
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        return new_review
+    else:
+        db.session.rollback()
+        print(" Landlord is not authorized to create a review")
+        return None
 
 def get_review(id):
     """Get a single review by ID"""
