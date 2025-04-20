@@ -15,6 +15,7 @@ class Review(db.Model):
     #username = db.Column(db.String(80), db.ForeignKey('user.username'), nullable=False)  # Added username column
 
     # Relationships (corrected)
+    tenant = db.relationship('User', backref='reviews')
     #user = db.relationship('User', back_populates='reviews')
 #    listing = db.relationship('Listing', back_populates='reviews')
 

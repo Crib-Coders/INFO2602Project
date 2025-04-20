@@ -13,7 +13,7 @@ class User(db.Model):
 
     # Relationships
     listings = db.relationship('Listing', backref='landlord', lazy=True, cascade='all, delete-orphan')
-    reviews = db.relationship('Review', backref='tenant', lazy=True, cascade='all, delete-orphan')
+    #reviews = db.relationship('Review', backref='tenant_relstion', lazy=True, cascade='all, delete-orphan')
 
     def __init__(self, username, password, role='tenant', is_verified=None):  # Updated init
         self.username = username

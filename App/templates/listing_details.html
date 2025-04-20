@@ -23,7 +23,7 @@
                 <div class="card-body">
                   <p>{{ review.text }}</p>
                   <small class="text-muted">
-                    Posted by Tenant {{ review.tenant_id }} |
+                    Posted by Tenant {{ review.tenant.username }} |
                     {% if review.rating %}
                       Rating: {{ review.rating }} stars
                     {% else %}
