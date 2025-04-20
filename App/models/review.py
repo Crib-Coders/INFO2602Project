@@ -10,9 +10,11 @@ class Review(db.Model):
     #user = db.relationship('User', backref=db.backref('reviews', lazy=True))
     listing_id = db.Column(db.Integer, db.ForeignKey('listing.id'), nullable=False)  # Added foreign key for listing
     text = db.Column(db.String(120), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  # Added rating column
+    #username = db.Column(db.String(80), db.ForeignKey('user.username'), nullable=False)  # Added username column
 
     # Relationships (corrected)
-#    user = db.relationship('User', back_populates='reviews')
+    #user = db.relationship('User', back_populates='reviews')
 #    listing = db.relationship('Listing', back_populates='reviews')
 
 def __init__(self, tenant_id, listing_id, text):

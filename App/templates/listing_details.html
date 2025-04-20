@@ -23,7 +23,18 @@
                 <div class="card-body">
                   <p>{{ review.text }}</p>
                   <small class="text-muted">
-                    Posted by Tenant #{{ review.tenant_id }}
+                    Posted by Tenant {{ current_user.username }} |
+                    {% if review.rating %}
+                      Rating: {{ review.rating }} stars
+                    {% else %}
+                      No rating provided
+                    {% endif %}
+                    {% if review.updated_at %}
+                      on {{ review.updated_at.strftime('%B %d, %Y') }}
+                    {% endif %}
+                    {% if review.created_at and review.created_at != review.updated_at %}
+                      (originally posted on {{ review.created_at.strftime('%B %d, %Y') }})
+                    {% endif %}
                     {% if review.created_at %}
                       on {{ review.created_at.strftime('%B %d, %Y') }}
                     {% endif %}

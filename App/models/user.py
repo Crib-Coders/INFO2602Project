@@ -45,4 +45,16 @@ class User(db.Model):
     def check_password(self, password):
         """Check hashed password."""
         return check_password_hash(self.password, password)
+    
+    def verify_user(self):
+        """Verify the user."""
+        self.is_verified = True
+        db.session.commit()
+    
+    def is_verified(self):
+        """Check if the user is verified."""
+        return self.is_verified
 
+    def role(self):
+        """Get the user's role."""
+        return self.role

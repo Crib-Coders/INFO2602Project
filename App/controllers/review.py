@@ -5,7 +5,7 @@ from App.controllers import *
 from App.controllers.listing import get_all_listings
 
 
-def create_review(user_id, listing_id, text):
+def create_review(user_id, listing_id, text, rating=None):
     temp = User.query.filter_by(id=user_id).first()
     if not temp:
         db.session.rollback()
@@ -16,7 +16,8 @@ def create_review(user_id, listing_id, text):
         new_review = Review(
             tenant_id=user_id,
             listing_id=listing_id,
-            text=text
+            text=text,
+            rating=rating
         )
         db.session.add(new_review)
         db.session.commit()
