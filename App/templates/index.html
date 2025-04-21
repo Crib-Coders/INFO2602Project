@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Apartment Reviews{% endblock %}
-{% block page %}Apartment Reviews{% endblock %}
+{% block page %}Apartment Reviews  Dashboard{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -8,14 +8,14 @@
         <!-- PRIVATE VIEW (Logged In) -->
         <div class="row">
             <div class="col s12">
-              <h4>Welcome, {{ current_user.username }}!</h4>
+          
               {% if current_user.role == 'landlord' %}
                  
               {% endif %}  
     {% endif %}
 
     <!-- PUBLIC LISTINGS SECTION (Matches Wireframe) -->
-    <h1 class="mb-4">Available Listings</h1>
+    <h1 class="center-align mb-4">Available Listings</h1>
   
   {% if listings %}
     <div class="row">
@@ -38,7 +38,7 @@
                 <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
               </p>
 
-  <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" class="btn btn-primary">View Details</a>
+               <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" class="btn btn-primary">View Details</a>
             </div>
           </div>
         </div>
