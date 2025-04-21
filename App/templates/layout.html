@@ -1,100 +1,105 @@
 <!doctype html>
-<html>
-  <head>
-    <!-- Meta & Title -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{% block title %}{% endblock %}</title>
+<html lang="en" class="bg-gradient-to-br from-[#EDEEE7] via-[#18BFB1] to-[#7AD1C4]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}CribCoders{% endblock %}</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --glass-bg: rgba(237,238,231,0.5);
+      --color-outer: #3E4C4C;
+      --color-alab: #EDEEE7;
+      --primary-teal: #008080;
+      --secondary-teal: #7AD1C4;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+    }
+    
+    .listing-card {
+      transition: all 0.3s ease;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .listing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .review-card {
+      border-left: 4px solid var(--primary-teal);
+      transition: all 0.3s ease;
+    }
+    
+    .review-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Custom Styles -->
-    <style>
-      body {
-        background-color: #f4f6f7;
-        font-family: 'Roboto', sans-serif;
-      }
-
-      .nav-wrapper {
-        padding: 0 20px;
-      }
-
-      .brand-logo {
-        font-weight: 600;
-        font-size: 1.6rem;
-      }
-
-      .nav-wrapper a {
-        color: white;
-        font-weight: 500;
-      }
-
-      .nav-wrapper span {
-        color: white;
-        font-weight: 500;
-        padding-right: 10px;
-      }
-
-      .navbar-form label {
-        color: white !important;
-      }
-
-      .container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-
-      .teal.lighten-2 {
-        background-color: #26a69a !important;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="teal lighten-2">
-      <div class="nav-wrapper">
-        <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
-        <ul id="nav-mobile" class="left">
-          <li><a href="/">Home</a></li>
-          <li><a href="/users">Users Jinja</a></li>
-          {% if current_user.is_authenticated %}
-            <li><a href="/identify">Identify</a></li>
-          {% endif %}
-          <li><a href="/static/users">Users JS</a></li>
-        </ul>
-
+  <!-- Glass Navbar -->
+  <nav class="glass sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="/" class="text-3xl font-extrabold text-[#008080]">🏠 CribCoders</a>
+      <div class="hidden md:flex space-x-6 font-semibold text-[#3E4C4C]">
+        <a href="/" class="hover:text-[#008080] transition">Home</a>
+        <a href="/listings" class="hover:text-[#008080] transition">Listings</a>
         {% if current_user.is_authenticated %}
-        <ul id="nav-mobile" class="right">
-          <li><span>Welcome {{ current_user.username }}</span></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul>
+          <a href="/dashboard" class="hover:text-[#008080] transition">Dashboard</a>
+          <span class="text-[#3E4C4C]">Welcome {{ current_user.username }}</span>
+          <a href="/logout" class="hover:text-[#008080] transition">Logout</a>
         {% else %}
-        <ul id="nav-mobile" class="right">
-          <li><a href="{{ url_for('auth_views.login_page') }}">Login</a></li>
-        </ul>
+          <a href="{{ url_for('auth_views.login_page') }}" class="hover:text-[#008080] transition">Login</a>
+          <!--<a href="/signup" class="hover:text-[#008080] transition">Sign Up</a> -->
         {% endif %}
       </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container" id="content">
-      {% block content %}{% endblock %}
     </div>
+  </nav>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      M.AutoInit();
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-8">
+    {% block content %}{% endblock %}
+  </main>
 
+  <!-- Footer -->
+  <footer class="bg-[#3E4C4C] text-[#EDEEE7] text-center py-6 glass mt-auto">
+    <p class="text-sm">&copy; 2025 CribCoders — Apartment Reviews</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    // Initialize any needed JS components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Flash messages
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
-            M.toast({html: '{{ message }}'});
+            M.toast({html: '{{ message }}', classes: 'rounded-lg'});
           {% endfor %}
         {% endif %}
       {% endwith %}
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
