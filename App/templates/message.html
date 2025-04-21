@@ -5,17 +5,17 @@
 {{ super() }}
 
 {% block content %}
-<section class="flex justify-center items-center py-12">
-  <div class="glass p-10 rounded-3xl shadow-xl max-w-lg mx-auto">
-    <h2 class="text-3xl font-semibold text-[#008080] text-center mb-6">{{title}}</h2>
+<section style="display: flex; justify-content: center; align-items: center; padding: 50px 20px;">
+  <div style="padding: 40px; background: rgba(237, 238, 231, 0.5); backdrop-filter: blur(10px); border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
+    <h2 style="font-size: 2.5rem; font-weight: 600; color: #008080; text-align: center; margin-bottom: 20px;">{{title}}</h2>
 
-    <div class="text-[#3E4C4C] text-center">
-      <p class="text-lg font-medium">{{ message }}</p>
+    <div style="color: #3E4C4C; text-align: center;">
+      <p style="font-size: 1.2rem; font-weight: 500;">{{ message }}</p>
     </div>
 
-    <div class="mt-8 text-center">
+    <div style="margin-top: 40px; text-align: center;">
       <a href="{{ url_for('index_views.index_page') }}"
-         class="inline-block bg-[#008080] hover:bg-[#7AD1C4] text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-transform hover:scale-105">
+         style="display: inline-block; background-color: #008080; color: white; font-weight: 600; padding: 12px 20px; border-radius: 30px; text-decoration: none; transition: background-color 0.3s, transform 0.3s;">
         Go Back to Listings
       </a>
     </div>
