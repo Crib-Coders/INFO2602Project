@@ -1,37 +1,47 @@
 {% extends "layout.html" %}
 
+{% block title %}Create New Listing{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-  <h2>Create New Listing</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    
-    <div class="form-group">
-      {{ form.title.label }}
-      {{ form.title(class="form-control") }}
-    </div>
-    
-    <div class="form-group">
-      {{ form.description.label }}
-      {{ form.description(class="form-control", rows=5) }}
-    </div>
-    
-    <div class="form-group">
-      {{ form.price.label }}
-      {{ form.price(class="form-control") }}
-    </div>
-    
-    <div class="form-group">
-      {{ form.address.label }}
-      {{ form.address(class="form-control") }}
-    </div>
-    
-    <div class="form-group">
-      {{ form.images.label }}
-      {{ form.images(multiple="multiple") }}
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Create Listing</button>
-  </form>
-</div>
+<section class="flex justify-center items-center py-12">
+  <div class="w-full max-w-2xl glass p-10 rounded-3xl shadow-xl text-[#3E4C4C]">
+    <h2 class="text-3xl font-bold text-[#008080] mb-6 text-center">Create New Listing</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+      {{ form.hidden_tag() }}
+
+      <div>
+        <label class="block font-semibold mb-1">{{ form.title.label }}</label>
+        {{ form.title(class="w-full rounded-xl p-3 border border-gray-300 focus:ring-2 focus:ring-[#18BFB1]") }}
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">{{ form.description.label }}</label>
+        {{ form.description(class="w-full rounded-xl p-3 border border-gray-300 focus:ring-2 focus:ring-[#18BFB1]", rows="5") }}
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">{{ form.price.label }}</label>
+        {{ form.price(class="w-full rounded-xl p-3 border border-gray-300 focus:ring-2 focus:ring-[#18BFB1]") }}
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">{{ form.address.label }}</label>
+        {{ form.address(class="w-full rounded-xl p-3 border border-gray-300 focus:ring-2 focus:ring-[#18BFB1]") }}
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">{{ form.images.label }}</label>
+        {{ form.images(class="w-full", multiple="multiple") }}
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+          class="bg-[#008080] hover:bg-[#7AD1C4] text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105">
+          Create Listing
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
 {% endblock %}
