@@ -4,26 +4,26 @@
 {% block page %}Login{% endblock %}
 
 {% block content %}
-<section class="flex justify-center items-center py-12">
-  <div class="glass p-10 rounded-3xl shadow-xl max-w-md mx-auto">
-    <h2 class="text-3xl font-semibold text-[#008080] mb-6 text-center">Login</h2>
+<section style="display: flex; justify-content: center; align-items: center; padding: 50px 20px;">
+  <div class="glass" style="padding: 30px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 400px; margin: 0 auto;">
+    <h2 style="font-size: 2.5rem; font-weight: 600; color: #008080; margin-bottom: 20px; text-align: center;">Login</h2>
 
-    <form method="POST" action="{{ url_for('auth_views.login_action') }}" class="space-y-6">
+    <form method="POST" action="{{ url_for('auth_views.login_action') }}" style="display: flex; flex-direction: column; gap: 20px;">
       
       <div>
-        <label for="username" class="block font-semibold text-[#3E4C4C] mb-1">Username</label>
+        <label for="username" style="font-weight: 600; color: #3E4C4C; margin-bottom: 10px;">Username</label>
         <input id="username" name="username" type="text" required
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#18BFB1] placeholder-[#3E4C4C]">
+          style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-size: 1rem; color: #3E4C4C;">
       </div>
 
       <div>
-        <label for="password" class="block font-semibold text-[#3E4C4C] mb-1">Password</label>
+        <label for="password" style="font-weight: 600; color: #3E4C4C; margin-bottom: 10px;">Password</label>
         <input id="password" name="password" type="password" required
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#18BFB1] placeholder-[#3E4C4C]">
+          style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-size: 1rem; color: #3E4C4C;">
       </div>
 
-      <div class="text-center">
-        <button type="submit" class="w-full bg-[#008080] hover:bg-[#7AD1C4] text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-transform hover:scale-105">
+      <div style="text-align: center;">
+        <button type="submit" style="background-color: #008080; color: white; font-weight: 600; padding: 12px 20px; border-radius: 30px; width: 100%; cursor: pointer; transition: background-color 0.3s, transform 0.3s;">
           Login
         </button>
       </div>
