@@ -55,6 +55,6 @@ class User(db.Model):
         """Check if the user is verified."""
         return self.is_verified
 
-    def role(self):
+    def get_role(self):
         """Get the user's role."""
         return self.role

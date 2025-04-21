@@ -13,6 +13,17 @@ def get_user_by_username(username):
 def get_user(id):
     return User.query.get(id)
 
+def get_user_details(id):
+    user = User.query.filter_by(id=id).first()
+    if not user:
+        return None
+    return {
+        "id": user.id,
+        "username": user.username,
+        "role": user.role,
+        "is_verified": user.is_verified,
+    }
+
 def get_all_users():
     return User.query.all()
 
@@ -30,4 +41,6 @@ def update_user(id, username):
         db.session.add(user)
         return db.session.commit()
     return None
+
+
     
