@@ -1,96 +1,27 @@
-from App.models import Review
-from App.database import db
-from App.models import *
-from App.controllers import *
-from App.controllers.listing import get_all_listings
+from flask import Blueprint, request, jsonify
+from App.models import Review, db
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
+review_routes = Blueprint('review_routes', __name__)
 
-def create_review(user_id, listing_id, text, rating=None):
-    temp = User.query.filter_by(id=user_id).first()
-    if not temp:
-        db.session.rollback()
-        print(" User not found")
-    if temp.role != 'landlord':
-        
-        """Create a new review for an apartment"""
-        new_review = Review(
-            tenant_id=user_id,
-            listing_id=listing_id,
-            text=text,
-            rating=rating
-        )
-        db.session.add(new_review)
-        db.session.commit()
-        return new_review
-    else:
-        db.session.rollback()
-        print(" Landlord is not authorized to create a review")
-        return None
+@review_routes.route('/reviews', methods=['POST'])
+@jwt_required()
+def create_review():
+    data = request.get_json()
+    user_id = get_jwt_identity()
 
-def get_review(id):
-    """Get a single review by ID"""
-    return Review.query.get(id)
+    listing_id = data.get('listing_id')
+    text = data.get('text')
+    rating = data.get('rating')
 
-def get_all_reviews():
-    """Get all reviews"""
-    return Review.query.all()
+    if not listing_id or not text or not rating:
+        return jsonify({"error": "Missing fields"}), 400
 
-def get_all_reviews_json():
-    """Get all reviews in JSON format"""
-    reviews = Review.query.all()
-    if not reviews:
-        return []
-    return [review.get_json() for review in reviews]
-
-def get_reviews_for_listing(listing_id):
-    """Get all reviews for a specific listing"""
-    return Review.query.filter_by(listing_id=listing_id).all()
-
-def update_review(id, text=None):
-    """Update review text"""
-    review = get_review(id)
-    if review:
-        if text: review.text = text
+    try:
+        review = Review(tenant_id=user_id, listing_id=listing_id, text=text, rating=int(rating))
         db.session.add(review)
         db.session.commit()
-        return review
-    return None
+        return jsonify(review.get_json()), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-def delete_review(id):
-    """Delete a review"""
-    review = get_review(id)
-    if review:
-        db.session.delete(review)
-        db.session.commit()
-        return True
-    return False
-
-
-
-#Review Controller Tests
-
-def test_reviews():
-    # Create test tenant
-    tenant, _ = register('testtenant', 'tenantpass', 'tenant')
-    
-    # Get first listing
-    listing = get_all_listings()[0]
-    if not listing:
-        print("No listings available for testing.")
-        return False
-    
-    # Test create review
-    print("Testing create review...")
-    review = create_review(
-        user_id=tenant.id,
-        listing_id=listing.id,
-        text="Great apartment!"
-    )
-    assert review is not None, "Create review failed"
-    print(f"✓ Created review: {review.text}")
-    
-    # Test get reviews for listing
-    print("Testing get reviews for listing...")
-    reviews = get_reviews_for_listing(listing.id)
-    assert len(reviews) > 0, "No reviews found"
-    print(f"✓ Found {len(reviews)} reviews")
