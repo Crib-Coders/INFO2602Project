@@ -6,61 +6,6 @@
 <div class="container mx-auto px-4 py-8">
   <h1 class="text-4xl font-bold text-[#3E4C4C] mb-8 text-center">Available Listings</h1>
 
-<<<<<<< HEAD
-          <div class="container">
-              {% if current_user.is_authenticated %}
-                  <!-- PRIVATE VIEW (Logged In) -->
-                  <div class="row">
-                      <div class="col s12">
-                          {% if current_user.role == 'landlord' %}
-                              <!-- Landlord specific content can go here -->
-                          {% endif %}  
-                      </div>
-                  </div>
-              {% endif %}
-
-              <!-- PUBLIC LISTINGS SECTION -->
-              <h1 class="page-title">Available Listings</h1>
-
-              {% if listings %}
-                  <div class="row">
-                      {% for listing in listings %}
-                          <div class="col-md-4 col-sm-6">
-                              <div class="listing-card">
-                                  {% if listing.image %}
-                                      <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" 
-                                           alt="{{ listing.title }}" 
-                                           class="listing-image">
-                                  {% else %}
-                                      <div class="listing-image" style="background-color: #ecf0f1; display: flex; align-items: center; justify-content: center; color: #7f8c8d;">
-                                          <i class="fas fa-home" style="font-size: 3rem;"></i>
-                                      </div>
-                                  {% endif %}
-                                  <div class="card-body">
-                                      <h5 class="card-title">{{ listing.title }}</h5>
-                                      <p class="card-text">
-                                          <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s)<br>
-                                          <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s)<br>
-                                          <i class="fas fa-dollar-sign"></i> ${{ listing.price }} per Month<br>
-                                          <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
-                                      </p>
-                                      <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" 
-                                         class="btn-view">
-                                          View Details
-                                      </a>
-                                  </div>
-                              </div>
-                          </div>
-                      {% endfor %}
-                  </div>
-              {% else %}
-                  <div class="no-listings">
-                      <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 15px;"></i>
-                      <h3>No listings available at this time</h3>
-                      <p>Please check back later for new property listings</p>
-                  </div>
-              {% endif %}
-=======
   {% if listings %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for listing in listings %}
@@ -99,7 +44,6 @@
                class="inline-block bg-[#008080] hover:bg-[#7AD1C4] text-white px-4 py-2 rounded-lg transition">
               View Details
             </a>
->>>>>>> a942425ea8e9235b625bdd9f733282dd92b105bd
           </div>
         </div>
       {% endfor %}
