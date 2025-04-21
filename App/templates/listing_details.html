@@ -3,66 +3,25 @@
 {% block title %}{{ listing.title if listing else "Listing" }}{% endblock %}
 
 {% block content %}
-<section class="container mx-auto px-6 py-10">
+<section class="container" style="padding: 40px 20px;">
   {% if listing %}
-    <div class="glass p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold text-[#008080] mb-4">{{ listing.title }}</h1>
+    <div class="glass" style="padding: 30px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 800px; margin: 0 auto;">
+      <h1 style="font-size: 2.5rem; font-weight: bold; color: #008080; margin-bottom: 20px;">{{ listing.title }}</h1>
       
       {% if listing.image %}
         <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}"
              alt="{{ listing.title }}"
-             class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
+             style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
       {% endif %}
 
-      <p class="text-[#3E4C4C] mb-2">
-        <i class="fas fa-bed mr-1"></i> {{ listing.bedrooms }} Bedroom(s) |
-        <i class="fas fa-bath mr-1"></i> {{ listing.bathrooms }} Bathroom(s) |
-        <i class="fas fa-dollar-sign mr-1"></i> ${{ listing.price }} / month
+      <p style="color: #3E4C4C; margin-bottom: 10px;">
+        <i class="fas fa-bed" style="margin-right: 5px;"></i> {{ listing.bedrooms }} Bedroom(s) |
+        <i class="fas fa-bath" style="margin-right: 5px;"></i> {{ listing.bathrooms }} Bathroom(s) |
+        <i class="fas fa-dollar-sign" style="margin-right: 5px;"></i> ${{ listing.price }} / month
       </p>
 
-      <p class="text-[#3E4C4C] mb-4">
-        <i class="fas fa-map-marker-alt mr-1"></i> {{ listing.location }}
+      <p style="color: #3E4C4C; margin-bottom: 20px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> {{ listing.location }}
       </p>
 
-      <h2 class="text-2xl font-semibold text-[#008080] mb-2">Description</h2>
-      <p class="mb-6 text-[#3E4C4C]">{{ listing.description or "No description provided." }}</p>
-
-      <h2 class="text-2xl font-semibold text-[#008080] mb-2">Reviews</h2>
-      {% if reviews %}
-        <div class="space-y-4">
-          {% for review in reviews %}
-            <div class="bg-white/80 p-4 rounded-xl shadow-md border border-gray-200">
-              <p class="text-[#3E4C4C]">{{ review.text }}</p>
-              <small class="text-gray-600 block mt-2">
-                Posted by Tenant <strong>{{ review.tenant.username }}</strong>
-                {% if review.rating %}| Rating: {{ review.rating }} ⭐{% endif %}
-                {% if review.updated_at %}
-                  on {{ review.updated_at.strftime('%B %d, %Y') }}
-                {% endif %}
-              </small>
-            </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p class="text-gray-500">No reviews yet.</p>
-      {% endif %}
-
-      <div class="mt-8 text-center">
-        <a href="{{ url_for('index_views.index_page') }}"
-           class="inline-block bg-[#008080] hover:bg-[#7AD1C4] text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-transform hover:scale-105">
-          ← Back to Listings
-        </a>
-      </div>
-    </div>
-
-  {% else %}
-    <div class="bg-red-100 text-red-700 p-6 rounded-xl text-center max-w-xl mx-auto shadow-md">
-      <p class="text-xl font-semibold">Listing not found.</p>
-      <a href="{{ url_for('index_views.index_page') }}"
-         class="mt-4 inline-block bg-[#3E4C4C] text-white font-medium py-2 px-5 rounded-full hover:bg-[#008080] transition">
-        ← Back to Listings
-      </a>
-    </div>
-  {% endif %}
-</section>
-{% endblock %}
+      <h2 style="font-size: 1.75
