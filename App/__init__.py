@@ -1,12 +1,12 @@
-# Import necessary modules and components
 from flask import Flask
 from .database import db
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 
 # Import all models, controllers, views, and main logic (add this here)
 from .models import *  # Import all models (User, Listing, Review, etc.)
-from .views import *  # Import all views/templates (optional)
 from .controllers import *  # Import all controllers (routes)
+from .views import *  # Import all views/templates (optional)
 from .main import *  # Import any main logic or app setup if necessary
 
 # Initialize Flask app
@@ -17,9 +17,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your-database.db'  # Update t
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Replace with your secret key
 
-# Initialize database and JWT manager
+# Initialize database, JWT manager, and migrate
 db.init_app(app)
 jwt = JWTManager(app)
+migrate = Migrate(app, db)
 
 # Register Blueprints for routes (your controllers should be here)
 from .controllers.review import review_routes
