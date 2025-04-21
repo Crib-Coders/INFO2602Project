@@ -14,3 +14,8 @@ def view_listing(id):
     listing = get_listing(id)
     reviews = get_reviews_for_listing(id) if listing else []
     return render_template('listing_details.html', listing=listing, reviews=reviews)
+
+@listing_views.route('/listings/create', methods=['GET', 'POST'])
+def create_new_listing():
+    
+    return render_template('create_listing.html')
