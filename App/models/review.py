@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import User
+from App.models import User, Listing  # Make sure Listing model exists and is imported
 
 class Review(db.Model):
     __tablename__ = 'review'
@@ -11,6 +11,7 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
 
     tenant = db.relationship('User', backref='reviews')
+    listing = db.relationship('Listing', backref='reviews')
 
     def __init__(self, tenant_id, listing_id, text, rating):
         self.tenant_id = tenant_id
@@ -28,3 +29,5 @@ class Review(db.Model):
             'tenant_username': self.tenant.username if self.tenant else None
         }
 
+    def __repr__(self):
+        return f"<Review {self.id} - Tenant {self.tenant_id} - {self.rating}⭐>"
