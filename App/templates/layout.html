@@ -1,63 +1,94 @@
-<!doctype html>
-<html>
-  <head>
-  
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{% block title %}{% endblock %}</title>
+<!DOCTYPE html>
+<html lang="en" class="bg-gradient-to-br from-[#EDEEE7] via-[#18BFB1] to-[#7AD1C4]">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}CribCoders{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  </head>
-  <body>
-    
-      <nav class="purple">
-          <div class="nav-wrapper">
-              <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
-              <ul id="nav-mobile" class="left">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="/users">Users Jinja</a></li>
-                  {% if current_user.is_authenticated %}
-                      <li><a href="/identify">Identify</a></li>
-                  {% endif %}
-                  <li><a href="/static/users">Users JS</a></li>
-              </ul>
+  <!-- Tailwind CSS (using CDN for preview/demo) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS for scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-              {% if current_user.is_authenticated %}
-              <ul id="nav-mobile" class="right">
-                  <li><span>Welcome {{ current_user.username }}</span></li>
-                  <li><a href="/logout">Logout</a></li>
-              </ul>
-              {% else %}
-              <ul id="nav-mobile" class="right">
-                  <li><a href="{{ url_for('auth_views.login_page') }}">Login</a></li>
-              </ul>
-              {% endif %}
-          </div>
-      </nav>
-      <style>
-          .navbar-form label {
-              color: white !important;
-          }
-      </style>
+  <style>
+    :root {
+      --glass-bg: rgba(237,238,231,0.5);
+      --color-outer: #3E4C4C;
+      --color-alab:   #EDEEE7;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
 
-    <div class="container" id="content">{% block content %}{% endblock %}</div>
+  <!-- Glass Navbar -->
+  <nav class="glass sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="/" class="text-3xl font-extrabold text-[#008080]">🏠 CribCoders</a>
+      <div class="hidden md:flex space-x-6 font-semibold text-[#3E4C4C]">
+        <a href="/" class="hover:text-[#008080] transition">Home</a>
+        <a href="/dashboard" class="hover:text-[#008080] transition">Dashboard</a>
+        <a href="/login" class="hover:text-[#008080] transition">Login</a>
+        <a href="/signup" class="hover:text-[#008080] transition">Sign Up</a>
+      </div>
+    </div>
+  </nav>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-       M.AutoInit();
+  <!-- Hero Section -->
+  <section
+    class="relative h-96 flex items-center justify-center text-white"
+    style="background-image:url('https://source.unsplash.com/1600x900/?apartment,interior'); background-size:cover;">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="z-10 text-center" data-aos="fade-up">
+      <h1 class="text-5xl font-extrabold mb-4">Find Your Dream Apartment</h1>
+      <p class="mb-6">Trusted listings. Verified tenants. Instant reviews.</p>
+      <a
+        href="/apartments"
+        class="bg-[#008080] hover:bg-[#7AD1C4] px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
+        Browse Listings
+      </a>
+    </div>
+  </section>
 
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-              {% for message in messages %}
-              M.toast({html: '{{message}}'})
-              {% endfor %}
-          {% endif %}
-        {% endwith %}
-       
-    </script>
-  </body>
+  <!-- Features Section -->
+  <section class="container mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div
+      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
+      data-aos="zoom-in">
+      <h3 class="text-2xl font-bold mb-2">Verified Listings</h3>
+      <p>Only quality apartments with full details.</p>
+    </div>
+    <div
+      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
+      data-aos="zoom-in" data-aos-delay="200">
+      <h3 class="text-2xl font-bold mb-2">Instant Reviews</h3>
+      <p>Real tenants, real feedback.</p>
+    </div>
+    <div
+      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
+      data-aos="zoom-in" data-aos-delay="400">
+      <h3 class="text-2xl font-bold mb-2">Secure Booking</h3>
+      <p>Book with confidence.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#3E4C4C] text-[#EDEEE7] text-center py-6 glass mt-auto">
+    <p class="text-sm">&copy; {{ year if year else 2025 }} CribCoders — Stylish Apartments</p>
+  </footer>
+
+  <!-- Initialize AOS -->
+  <script>
+    AOS.init({ once: true, duration: 800 });
+  </script>
+</body>
 </html>
