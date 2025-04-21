@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
-{% block title %}404 – Page Not Found{% endblock %}
+{% block title %}401 – Unauthorized{% endblock %}
 
 {% block content %}
-<main class="flex-1 flex items-center justify-center">
-  <div class="bg-[var(--glass-bg)] backdrop-blur-lg rounded-3xl shadow-xl p-12 text-center max-w-lg mx-auto">
-    <h1 class="text-6xl font-extrabold text-teal mb-4">404</h1>
-    <p class="text-2xl text-outer-space mb-6">Oops! The page you’re looking for doesn’t exist.</p>
-    <a href="{{ url_for('index_views.index_page') }}"
-       class="inline-block bg-teal hover:bg-tiffany text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
+<main style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #edece7; font-family: Arial, sans-serif;">
+  <div style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; text-align: center; max-width: 600px; width: 100%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+    <h1 style="font-size: 6rem; font-weight: bold; color: #008080; margin-bottom: 1rem;">401</h1>
+    <p style="font-size: 1.5rem; color: #3e4c4c; margin-bottom: 2rem;">Oops! You are not authorized to access this page.</p>
+    <a href="{{ url_for('index_views.index_page') }}" 
+       style="display: inline-block; background-color: #008080; color: white; font-size: 1rem; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; transition: background-color 0.3s, transform 0.3s;">
       Go Home
     </a>
   </div>
