@@ -1,52 +1,144 @@
-{% extends "layout.html" %}
+          {% extends "layout.html" %}
+          {% block title %}Apartment Reviews{% endblock %}
+          {% block page %}Apartment Reviews Dashboard{% endblock %}
 
-{% block title %}Apartment Listings{% endblock %}
+          {% block content %}
+          <style>
+              body {
+                  background-color: #f5f7fa;
+                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              }
+              .container {
+                  max-width: 1200px;
+                  margin: 0 auto;
+                  padding: 20px;
+              }
+              .listing-card {
+                  border-radius: 10px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  overflow: hidden;
+                  background: white;
+                  margin-bottom: 25px;
+              }
+              .listing-card:hover {
+                  transform: translateY(-5px);
+                  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+              }
+              .listing-image {
+                  width: 100%;
+                  height: 200px;
+                  object-fit: cover;
+              }
+              .card-body {
+                  padding: 20px;
+              }
+              .card-title {
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                  margin-bottom: 10px;
+                  color: #2c3e50;
+              }
+              .card-text {
+                  color: #7f8c8d;
+                  margin-bottom: 15px;
+              }
+              .card-text i {
+                  width: 20px;
+                  color: #3498db;
+                  margin-right: 5px;
+              }
+              .btn-view {
+                  background-color: #3498db;
+                  color: white;
+                  border: none;
+                  padding: 8px 15px;
+                  border-radius: 5px;
+                  text-decoration: none;
+                  display: inline-block;
+                  transition: background-color 0.3s;
+              }
+              .btn-view:hover {
+                  background-color: #2980b9;
+                  color: white;
+              }
+              .page-title {
+                  color: #2c3e50;
+                  text-align: center;
+                  margin: 30px 0;
+                  font-weight: 700;
+                  position: relative;
+              }
+              .page-title:after {
+                  content: "";
+                  display: block;
+                  width: 80px;
+                  height: 3px;
+                  background: #3498db;
+                  margin: 10px auto;
+              }
+              .no-listings {
+                  text-align: center;
+                  padding: 30px;
+                  background: white;
+                  border-radius: 10px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  color: #7f8c8d;
+              }
+          </style>
 
-{% block content %}
-<section style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;">
-  {% if current_user.is_authenticated %}
-    <!-- Optional dashboard welcome or landlord-only features -->
-    {% if current_user.role == 'landlord' %}
-      <div style="margin-bottom: 2rem; text-align: center;">
-        <h2 style="font-size: 1.5rem; font-weight: 600; color: #008080;">Welcome, Landlord 👋</h2>
-        <a href="{{ url_for('listing_views.create_listing') }}"
-           style="display: inline-block; margin-top: 1rem; background-color: #008080; color: white; font-weight: 600; padding: 0.5rem 1.5rem; border-radius: 30px; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, background-color 0.3s ease;">
-          + Create New Listing
-        </a>
-      </div>
-    {% endif %}
-  {% endif %}
+          <div class="container">
+              {% if current_user.is_authenticated %}
+                  <!-- PRIVATE VIEW (Logged In) -->
+                  <div class="row">
+                      <div class="col s12">
+                          {% if current_user.role == 'landlord' %}
+                              <!-- Landlord specific content can go here -->
+                          {% endif %}  
+                      </div>
+                  </div>
+              {% endif %}
 
-  <h1 style="font-size: 2.5rem; font-weight: 700; color: #3E4C4C; margin-bottom: 2.5rem; text-align: center;">Available Listings</h1>
+              <!-- PUBLIC LISTINGS SECTION -->
+              <h1 class="page-title">Available Listings</h1>
 
-  {% if listings %}
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem;">
-      {% for listing in listings %}
-        <div style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-          {% if listing.image %}
-            <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" alt="{{ listing.title }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
-          {% else %}
-            <div style="width: 100%; height: 200px; background-color: #ddd; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; border-radius: 15px;">
-              No Image
-            </div>
-          {% endif %}
-          <h3 style="font-size: 1.25rem; font-weight: bold; color: #3E4C4C; margin-top: 1rem;">{{ listing.title }}</h3>
-          <p style="color: #3E4C4C;">
-            <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s) | 
-            <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s) | 
-            <i class="fas fa-dollar-sign"></i> {{ listing.price }} per month
-          </p>
-          <p style="color: #3E4C4C;">
-            <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
-          </p>
-          <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" style="display: inline-block; background-color: #008080; color: white; font-weight: 600; padding: 0.5rem 1.5rem; border-radius: 30px; text-transform: uppercase; margin-top: 1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            View Details
-          </a>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p style="text-align: center; color: #3E4C4C;">No listings available.</p>
-  {% endif %}
-</section>
-{% endblock %}
+              {% if listings %}
+                  <div class="row">
+                      {% for listing in listings %}
+                          <div class="col-md-4 col-sm-6">
+                              <div class="listing-card">
+                                  {% if listing.image %}
+                                      <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" 
+                                           alt="{{ listing.title }}" 
+                                           class="listing-image">
+                                  {% else %}
+                                      <div class="listing-image" style="background-color: #ecf0f1; display: flex; align-items: center; justify-content: center; color: #7f8c8d;">
+                                          <i class="fas fa-home" style="font-size: 3rem;"></i>
+                                      </div>
+                                  {% endif %}
+                                  <div class="card-body">
+                                      <h5 class="card-title">{{ listing.title }}</h5>
+                                      <p class="card-text">
+                                          <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s)<br>
+                                          <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s)<br>
+                                          <i class="fas fa-dollar-sign"></i> {{ listing.price }} per month<br>
+                                          <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
+                                      </p>
+                                      <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" 
+                                         class="btn-view">
+                                          View Details
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  <div class="no-listings">
+                      <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                      <h3>No listings available at this time</h3>
+                      <p>Please check back later for new property listings</p>
+                  </div>
+              {% endif %}
+          </div>
+          {% endblock %}

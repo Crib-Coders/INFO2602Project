@@ -1,42 +1,11 @@
 {% extends "layout.html" %}
-
-{% block title %}401 – Unauthorized{% endblock %}
+{% block title %}Page Not Found{% endblock %}
+{% block page %}404 Error{% endblock %}
 
 {% block content %}
-<main style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #edece7; font-family: Arial, sans-serif;">
-  <div style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; text-align: center; max-width: 600px; width: 100%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-    <h1 style="font-size: 6rem; font-weight: bold; color: #008080; margin-bottom: 1rem;">401</h1>
-    <p style="font-size: 1.5rem; color: #3e4c4c; margin-bottom: 2rem;">Oops! You are not authorized to access this page.</p>
-    <a href="{{ url_for('index_views.index_page') }}" 
-       style="display: inline-block; background-color: #008080; color: white; font-size: 1rem; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;">
-      Go Home
-    </a>
-  </div>
-</main>
-
-<style>
-  /* Responsive Adjustments for smaller screens */
-  @media (max-width: 768px) {
-    main {
-      padding: 20px;
-    }
-    h1 {
-      font-size: 4rem;  /* Reduced size for smaller screens */
-    }
-    p {
-      font-size: 1.2rem; /* Slightly smaller text */
-    }
-    a {
-      font-size: 0.9rem; /* Adjusted button text size */
-      padding: 0.8rem 1.5rem; /* Adjusted padding for button */
-    }
-  }
-
-  /* Hover Effect for the Link/Button */
-  a:hover {
-    background-color: #7AD1C4;
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-</style>
+<div class="container">
+    <h1>Page Not Found</h1>
+    <p>What you were looking for is just not there.</p>
+    <a href="{{ url_for('index_views.index_page') }}" class="btn purple">Go Home</a>
+</div>
 {% endblock %}

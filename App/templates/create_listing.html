@@ -1,48 +1,37 @@
 {% extends "layout.html" %}
 
-{% block title %}Create New Listing{% endblock %}
-
 {% block content %}
-<section style="display: flex; justify-content: center; align-items: center; padding: 3rem 0;">
-  <div style="width: 100%; max-width: 700px; background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); color: #3E4C4C;">
-    <h2 style="font-size: 2rem; font-weight: bold; color: #008080; margin-bottom: 1.5rem; text-align: center;">Create New Listing</h2>
-
-    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 1.5rem;">
-      {{ form.hidden_tag() }}
-
-      <div>
-        <label style="font-weight: bold; margin-bottom: 0.5rem;">{{ form.title.label }}</label>
-        {{ form.title(style="width: 100%; padding: 0.75rem; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; focus:ring: 2px solid #18BFB1;") }}
-      </div>
-
-      <div>
-        <label style="font-weight: bold; margin-bottom: 0.5rem;">{{ form.description.label }}</label>
-        {{ form.description(style="width: 100%; padding: 0.75rem; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; focus:ring: 2px solid #18BFB1;", rows="5") }}
-      </div>
-
-      <div>
-        <label style="font-weight: bold; margin-bottom: 0.5rem;">{{ form.price.label }}</label>
-        {{ form.price(style="width: 100%; padding: 0.75rem; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; focus:ring: 2px solid #18BFB1;") }}
-      </div>
-
-      <div>
-        <label style="font-weight: bold; margin-bottom: 0.5rem;">{{ form.address.label }}</label>
-        {{ form.address(style="width: 100%; padding: 0.75rem; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; focus:ring: 2px solid #18BFB1;") }}
-      </div>
-
-      <div>
-        <label style="font-weight: bold; margin-bottom: 0.5rem;">{{ form.images.label }}</label>
-        {{ form.images(style="width: 100%;") }}
-      </div>
-
-      <div style="text-align: center;">
-        <button type="submit"
-          style="background-color: #008080; color: white; padding: 1rem 2rem; font-weight: bold; border-radius: 30px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.2s ease, background-color 0.3s ease;">
-          Create Listing
-        </button>
-      </div>
-    </form>
-  </div>
-</section>
+<div class="container mt-4">
+  <h2>Create New Listing</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+      {{ form.title.label }}
+      {{ form.title(class="form-control") }}
+    </div>
+    
+    <div class="form-group">
+      {{ form.description.label }}
+      {{ form.description(class="form-control", rows=5) }}
+    </div>
+    
+    <div class="form-group">
+      {{ form.price.label }}
+      {{ form.price(class="form-control") }}
+    </div>
+    
+    <div class="form-group">
+      {{ form.address.label }}
+      {{ form.address(class="form-control") }}
+    </div>
+    
+    <div class="form-group">
+      {{ form.images.label }}
+      {{ form.images(multiple="multiple") }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Create Listing</button>
+  </form>
+</div>
 {% endblock %}
-
