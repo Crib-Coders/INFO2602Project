@@ -1,43 +1,101 @@
-html {
-    padding: 0;
+/* General Reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif; /* Clean and modern font */
+  background-color: #EDEEE7; /* Alabaster Background */
+  color: #3E4C4C; /* Outer Space Text color */
+  line-height: 1.6;
+  box-sizing: border-box;
 }
 
+/* Glassmorphism Effect for Backgrounds */
+.glass {
+  background: rgba(255, 255, 255, 0.15); /* Light frosted glass effect */
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Body and Page Background */
+body {
+  background: linear-gradient(to right, #18BFB1, #7AD1C4); /* Light Sea Green to Tiffany Blue */
+  min-height: 100vh;
+}
+
+/* Listing Card */
 .listing-card {
-    width: 300px;
-    margin: 15px;
-    box-shadow: 0 2px 5px rgba(11, 11, 11, 0.1);
-}
-  
-.listing-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px 4px 0 0;
-}
-  
-  /* Responsive grid */
-.listings-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  margin: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Add to your style.css */
+.listing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Listing Image */
+.listing-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+  transition: transform 0.3s ease;
+}
+
+.listing-card:hover .listing-image {
+  transform: scale(1.05);
+}
+
+/* Responsive Grid for Listings */
+.listings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 30px;
+  justify-items: center;
+  padding-bottom: 60px;
+}
+
+/* Rating Styles */
 .rating {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
   margin-bottom: 10px;
 }
 
-.listing-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-  border-radius: 4px;
+.rating i {
+  color: #ffd700; /* Gold color for stars */
+  font-size: 1.2em;
 }
 
+/* Card Panel */
 .card-panel {
-  margin: 20px 0;
   padding: 20px;
-  border-radius: 4px;
-  background-color: #f5f1f1;
+  border-radius: 10px;
+  background-color: #f5f1f1; /* Light gray background */
+  margin: 20px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* Buttons */
+button {
+  background-color: #008080; /* Teal */
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #7AD1C4; /*
