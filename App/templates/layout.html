@@ -1,94 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gradient-to-br from-[#EDEEE7] via-[#18BFB1] to-[#7AD1C4]">
+<html lang="en" style="background: linear-gradient(to bottom right, #EDEEE7, #18BFB1, #7AD1C4);">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}CribCoders{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Tailwind CSS (using CDN for preview/demo) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AOS for scroll animations -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     :root {
-      --glass-bg: rgba(237,238,231,0.5);
+      --glass-bg: rgba(237, 238, 231, 0.5);
       --color-outer: #3E4C4C;
-      --color-alab:   #EDEEE7;
+      --color-alab: #EDEEE7;
+      --color-main: #008080;
+      --color-accent: #7AD1C4;
     }
     body {
       font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     .glass {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
     }
-  </style>
-</head>
-<body class="flex flex-col min-h-screen">
-
-  <!-- Glass Navbar -->
-  <nav class="glass sticky top-0 z-50 shadow-lg">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="/" class="text-3xl font-extrabold text-[#008080]">🏠 CribCoders</a>
-      <div class="hidden md:flex space-x-6 font-semibold text-[#3E4C4C]">
-        <a href="/" class="hover:text-[#008080] transition">Home</a>
-        <a href="/dashboard" class="hover:text-[#008080] transition">Dashboard</a>
-        <a href="/login" class="hover:text-[#008080] transition">Login</a>
-        <a href="/signup" class="hover:text-[#008080] transition">Sign Up</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section
-    class="relative h-96 flex items-center justify-center text-white"
-    style="background-image:url('https://source.unsplash.com/1600x900/?apartment,interior'); background-size:cover;">
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="z-10 text-center" data-aos="fade-up">
-      <h1 class="text-5xl font-extrabold mb-4">Find Your Dream Apartment</h1>
-      <p class="mb-6">Trusted listings. Verified tenants. Instant reviews.</p>
-      <a
-        href="/apartments"
-        class="bg-[#008080] hover:bg-[#7AD1C4] px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
-        Browse Listings
-      </a>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="container mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div
-      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
-      data-aos="zoom-in">
-      <h3 class="text-2xl font-bold mb-2">Verified Listings</h3>
-      <p>Only quality apartments with full details.</p>
-    </div>
-    <div
-      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
-      data-aos="zoom-in" data-aos-delay="200">
-      <h3 class="text-2xl font-bold mb-2">Instant Reviews</h3>
-      <p>Real tenants, real feedback.</p>
-    </div>
-    <div
-      class="glass p-6 rounded-2xl text-[#3E4C4C] shadow-xl transform hover:-translate-y-2 transition"
-      data-aos="zoom-in" data-aos-delay="400">
-      <h3 class="text-2xl font-bold mb-2">Secure Booking</h3>
-      <p>Book with confidence.</p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-[#3E4C4C] text-[#EDEEE7] text-center py-6 glass mt-auto">
-    <p class="text-sm">&copy; {{ year if year else 2025 }} CribCoders — Stylish Apartments</p>
-  </footer>
-
-  <!-- Initialize AOS -->
-  <script>
-    AOS.init({ once: true, duration: 800 });
-  </script>
-</body>
-</html>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    nav {
+      background: var(--glass-bg);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    nav a {
+      color: var(--color-outer);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: var(--color-main);
+    }
+    section {
+      padding: 50px 20px;
+    }
+    footer {
+      background-color: var(--color-outer);
+      color: var(--color-alab);
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+    }
+    .btn {
+      background-color: var(--color-main);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: var(--color-accent);
+      transform: scale(1.05);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20
