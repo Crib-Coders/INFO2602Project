@@ -1,24 +1,52 @@
 {% extends "layout.html" %}
+
 {% block title %}Apartment Listings{% endblock %}
 
 {% block content %}
-<section class="container mx-auto px-6 py-10">
+<section style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;">
   {% if current_user.is_authenticated %}
     <!-- Optional dashboard welcome or landlord-only features -->
     {% if current_user.role == 'landlord' %}
-      <div class="mb-6 text-center">
-        <h2 class="text-2xl font-semibold text-[#008080]">Welcome, Landlord 👋</h2>
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 600; color: #008080;">Welcome, Landlord 👋</h2>
         <a href="{{ url_for('listing_views.create_listing') }}"
-           class="inline-block mt-4 bg-[#008080] hover:bg-[#7AD1C4] text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform hover:scale-105">
+           style="display: inline-block; margin-top: 1rem; background-color: #008080; color: white; font-weight: 600; padding: 0.5rem 1.5rem; border-radius: 30px; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, background-color 0.3s ease;">
           + Create New Listing
         </a>
       </div>
     {% endif %}
   {% endif %}
 
-  <h1 class="text-4xl font-bold text-center text-[#3E4C4C] mb-10">Available Listings</h1>
+  <h1 style="font-size: 2.5rem; font-weight: 700; color: #3E4C4C; margin-bottom: 2.5rem; text-align: center;">Available Listings</h1>
 
   {% if listings %}
-    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem;">
       {% for listing in listings %}
-        <div class="glass rounded-3xl overflow-hidden shadow
+        <div style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+          {% if listing.image %}
+            <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" alt="{{ listing.title }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+          {% else %}
+            <div style="width: 100%; height: 200px; background-color: #ddd; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; border-radius: 15px;">
+              No Image
+            </div>
+          {% endif %}
+          <h3 style="font-size: 1.25rem; font-weight: bold; color: #3E4C4C; margin-top: 1rem;">{{ listing.title }}</h3>
+          <p style="color: #3E4C4C;">
+            <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s) | 
+            <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s) | 
+            <i class="fas fa-dollar-sign"></i> {{ listing.price }} per month
+          </p>
+          <p style="color: #3E4C4C;">
+            <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
+          </p>
+          <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" style="display: inline-block; background-color: #008080; color: white; font-weight: 600; padding: 0.5rem 1.5rem; border-radius: 30px; text-transform: uppercase; margin-top: 1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+            View Details
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align: center; color: #3E4C4C;">No listings available.</p>
+  {% endif %}
+</section>
+{% endblock %}
