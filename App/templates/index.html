@@ -1,51 +1,24 @@
 {% extends "layout.html" %}
-{% block title %}Apartment Reviews{% endblock %}
-{% block page %}Apartment Reviews  Dashboard{% endblock %}
+{% block title %}Apartment Listings{% endblock %}
 
 {% block content %}
-<div class="container">
-    {% if current_user.is_authenticated %}
-        <!-- PRIVATE VIEW (Logged In) -->
-        <div class="row">
-            <div class="col s12">
-          
-              {% if current_user.role == 'landlord' %}
-                 
-              {% endif %}  
+<section class="container mx-auto px-6 py-10">
+  {% if current_user.is_authenticated %}
+    <!-- Optional dashboard welcome or landlord-only features -->
+    {% if current_user.role == 'landlord' %}
+      <div class="mb-6 text-center">
+        <h2 class="text-2xl font-semibold text-[#008080]">Welcome, Landlord 👋</h2>
+        <a href="{{ url_for('listing_views.create_listing') }}"
+           class="inline-block mt-4 bg-[#008080] hover:bg-[#7AD1C4] text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform hover:scale-105">
+          + Create New Listing
+        </a>
+      </div>
     {% endif %}
-
-    <!-- PUBLIC LISTINGS SECTION (Matches Wireframe) -->
-    <h1 class="center-align mb-4">Available Listings</h1>
-  
-  {% if listings %}
-    <div class="row">
-      {% for listing in listings %}
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            {% if listing.image %}
-              <img src="{{ url_for('static', filename='images/listing' ~ listing.id ~ '.jpg') }}" alt="{{ listing.title }}" class="listing-image" >
-            {% else %}
-              <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
-                No Image
-              </div>
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ listing.title }}</h5>
-              <p class="card-text">
-                <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s)<br>
-                <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s)<br>
-                <i class="fas fa-dollar-sign"></i> {{ listing.price }} per month<br>
-                <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
-              </p>
-
-               <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" class="btn btn-primary">View Details</a>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="alert alert-info">No listings available at this time.</div>
   {% endif %}
-</div>
-{% endblock %}
+
+  <h1 class="text-4xl font-bold text-center text-[#3E4C4C] mb-10">Available Listings</h1>
+
+  {% if listings %}
+    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {% for listing in listings %}
+        <div class="glass rounded-3xl overflow-hidden shadow
