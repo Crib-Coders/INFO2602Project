@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
-{% block title %}Page Not Found{% endblock %}
-{% block page %}404 Error{% endblock %}
+
+{% block title %}404 – Page Not Found{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Page Not Found</h1>
-    <p>What you were looking for is just not there.</p>
-    <a href="{{ url_for('index_views.index_page') }}" class="btn purple">Go Home</a>
-</div>
+<main class="flex-1 flex items-center justify-center">
+  <div class="bg-[var(--glass-bg)] backdrop-blur-lg rounded-3xl shadow-xl p-12 text-center max-w-lg mx-auto">
+    <h1 class="text-6xl font-extrabold text-teal mb-4">404</h1>
+    <p class="text-2xl text-outer-space mb-6">Oops! The page you’re looking for doesn’t exist.</p>
+    <a href="{{ url_for('index_views.index_page') }}"
+       class="inline-block bg-teal hover:bg-tiffany text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
+      Go Home
+    </a>
+  </div>
+</main>
 {% endblock %}
