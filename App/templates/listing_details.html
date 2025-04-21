@@ -77,12 +77,7 @@
         </div>
       </div>
     </div>
-  
-    
-    <div class="button-row">
-      <a href="{{ url_for('listing_views.create_review', listing_id=listing.id) }}" class="btn create-button">Leave a Review</a>
-      <a href="{{ url_for('index_views.index_page') }}" class="btn back-button">Back to Listings</a>
-    </div>
+    <a href="{{ url_for('index_views.index_page') }}" class="btn back-button">Back to Listings</a>
     {% else %}
       <div class="alert alert-danger">Listing not found</div>
       <a href="{{ url_for('index_views.index_page') }}" class="btn back-button">Back to Listings</a>
@@ -274,28 +269,7 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       color: white;
     }
-    .create-button {
-      background-color: var(--success-color);
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      border: none;
-      margin: 0 auto 2rem auto;
-    }
-    .create-button:hover{
-    background-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    color: white;
-        }   
-    .button-row {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
+
     @media (max-width: 768px) {
       .card-body {
         padding: 1.5rem;

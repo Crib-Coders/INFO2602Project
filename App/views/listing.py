@@ -14,12 +14,3 @@ def view_listing(id):
     listing = get_listing(id)
     reviews = get_reviews_for_listing(id) if listing else []
     return render_template('listing_details.html', listing=listing, reviews=reviews)
-
-@listing_views.route('/listings/<int:listing_id>/reviews/create', methods=['GET', 'POST'])
-def create_review(listing_id):
-    listing = get_listing(listing_id)
-    if not listing:
-        return render_template('404.html'), 404
-    return render_template('create_review.html', listing=listing)
-
-
