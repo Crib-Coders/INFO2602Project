@@ -12,6 +12,7 @@ from App.database import db
 def login(username, password):
     """Authenticate user and return token if successful"""
     user = User.query.filter_by(username=username).first()
+    print(user.username, user.role, user.is_verified)
     if user and user.check_password(password):
         return create_access_token(identity=user.id)
     return None

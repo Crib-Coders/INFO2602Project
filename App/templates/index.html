@@ -121,7 +121,7 @@
                                       <p class="card-text">
                                           <i class="fas fa-bed"></i> {{ listing.bedrooms }} Bedroom(s)<br>
                                           <i class="fas fa-bath"></i> {{ listing.bathrooms }} Bathroom(s)<br>
-                                          <i class="fas fa-dollar-sign"></i> {{ listing.price }} per month<br>
+                                          <i class="fas fa-dollar-sign"></i> ${{ listing.price }} per Month<br>
                                           <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
                                       </p>
                                       <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" 
