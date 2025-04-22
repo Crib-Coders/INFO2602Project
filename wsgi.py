@@ -6,6 +6,8 @@ from App.database import db, get_migrate
 from App.models import *
 from App.main import create_app
 from App.controllers.listing import *
+from App.controllers.auth import test_auth  # ensure test_auth is available
+from App.controllers.listing import test_listings  # ensure test_listings is available
 from App.controllers.review import test_reviews
 from App.controllers import * # Import your controllers here
 

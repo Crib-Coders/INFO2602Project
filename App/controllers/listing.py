@@ -71,7 +71,7 @@ def delete_listing(id):
         return True
     return False
 
-def search_listings(location=None, min_price=None, max_price=None, bedrooms=None):
+def search_listings(location=None, min_price=None, max_price=None, bedrooms=None, bathrooms=None):
     """Search listings with filters"""
     query = Listing.query
     
@@ -83,6 +83,8 @@ def search_listings(location=None, min_price=None, max_price=None, bedrooms=None
         query = query.filter(Listing.price <= max_price)
     if bedrooms:
         query = query.filter(Listing.bedrooms >= bedrooms)
+    if bathrooms:
+        query = query.filter(Listing.bathrooms >= bathrooms)
     
     return query.all()
 

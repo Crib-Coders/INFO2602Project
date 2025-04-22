@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+{% block title %}Write a Review{% endblock %}
+{% block page %}Write a Review for {{ listing.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card review-form-card">
+    <div class="card-body">
+      <h2 class="section-title">Leave a Review</h2>
+      <form method="POST" action="">
+        <div class="form-group mb-4">
+          <label for="rating" class="form-label">Rating</label>
+          <select name="rating" id="rating" class="form-control styled-select">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+          </select>
+        </div>
+        <div class="form-group mb-4">
+          <label for="text" class="form-label">Review</label>
+          <textarea name="text" id="text" rows="5" class="form-control styled-textarea" required></textarea>
+        </div>
+        <div class="button-row">
+          <button type="submit" class="btn create-button">Submit Review</button>
+          <a href="{{ url_for('listing_views.view_listing', id=listing.id) }}" class="btn back-button">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --light-text: #7f8c8d;
+    --dark-text: #34495e;
+    --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    --border-radius: 12px;
+  }
+
+  .review-form-card {
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border: none;
+    overflow: hidden;
+    background: white;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .card-body {
+    padding: 2.5rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .styled-select,
+  .styled-textarea {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s ease;
+  }
+
+  .styled-select:focus,
+  .styled-textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+
+  .styled-textarea {
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+  }
+
+  .button-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin-top: 2rem;
+  }
+
+  .create-button {
+    background-color: var(--success-color);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .create-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+
+  .back-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .back-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+    }
+
+    .button-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>
+{% endblock %}

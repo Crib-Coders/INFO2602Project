@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
+from flask import Blueprint, render_template, jsonify, request, flash, redirect, url_for, session
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
 
 
@@ -8,6 +8,8 @@ from App.controllers import (
     login,
     create_user,
     get_all_users,
+    register,
+    get_user_by_username  # needed for session store
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -42,6 +44,10 @@ def login_action():
 
     response = redirect(url_for('index_views.index_page'))  # Redirect to home page
     set_access_cookies(response, token)
+    # Set session user_id for fallback auth
+    user = get_user_by_username(data['username'])
+    if user:
+        session['user_id'] = user.id
     flash('Login successful!', 'success')
     return response
 
@@ -50,7 +56,23 @@ def logout_action():
     response = redirect(request.referrer) 
     flash("Logged Out!")
     unset_jwt_cookies(response)
+    # Clear session fallback
+    session.pop('user_id', None)
     return response
+
+@auth_views.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    data = request.form
+    user, error = register(data['username'], data['password'])
+    if error:
+        flash(error, 'error')
+        return redirect(url_for('auth_views.signup_page'))
+    flash('Signup successful! Please login.', 'success')
+    return redirect(url_for('auth_views.login_page'))
 
 '''
 API Routes

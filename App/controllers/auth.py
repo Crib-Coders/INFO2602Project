@@ -5,6 +5,7 @@ from flask_jwt_extended import (
     get_jwt_identity,
     verify_jwt_in_request
 )
+from flask import session  # added session fallback
 from werkzeug.security import generate_password_hash, check_password_hash
 from App.models import User
 from App.controllers import *
@@ -38,12 +39,16 @@ def register(username, password, role='tenant'):
 
 def get_current_user():
     """Get the currently authenticated user"""
+    # Try JWT first
     try:
         verify_jwt_in_request()
         user_id = get_jwt_identity()
-        return User.query.get(user_id)
     except:
-        return None
+        # Fallback to session-based login
+        user_id = session.get('user_id')
+    if user_id:
+        return User.query.get(user_id)
+    return None
 
 def change_password(user_id, old_password, new_password):
     """Change user password"""
@@ -72,18 +77,12 @@ def setup_jwt(app):
     return jwt
 
 def add_auth_context(app):
-    """Make authentication status available to templates"""
+    """Make authentication status available to templates, using session and JWT fallback"""
     @app.context_processor
     def inject_user():
-        try:
-            verify_jwt_in_request()
-            user_id = get_jwt_identity()
-            current_user = User.query.get(user_id)
-            is_authenticated = True
-        except:
-            is_authenticated = False
-            current_user = None
-        return dict(is_authenticated=is_authenticated, current_user=current_user)
+        # Determine current user via JWT or session
+        user = get_current_user()
+        return dict(is_authenticated=bool(user), current_user=user)
 
 def get_user_by_id(user_id):
     """Get user by ID"""
